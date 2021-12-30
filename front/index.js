@@ -100,6 +100,18 @@
 
       return cars;
     }
+
+    function removeCar(car) {                     
+      var ajax = new XMLHttpRequest();
+      ajax.open('DELETE', `http://localhost:3333/cars/${car.id}`);
+      ajax.send();
+
+      ajax.addEventListener('readystatechange', () => {
+        if(ajax.readyState === 4 && ajax.status === 200) {
+          console.log("Carro removido");
+        }
+      });      
+    }
   
 
     function createCar(car) {
@@ -160,6 +172,7 @@
         var $child = $deleteImg.parentNode;
   
         $carTable.get()[0].lastElementChild.removeChild($child);
+        removeCar(car);
       }      
       $fragment.appendChild($tr);
       $carTable.get()[0].lastElementChild.appendChild($fragment);      
