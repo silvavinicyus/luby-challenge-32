@@ -2,6 +2,7 @@ import  express, { Request, Response } from "express";
 import cors from 'cors';
 
 interface Car {
+  id: number;
   marca: string;
   ano: string;
   cor: string;
@@ -15,9 +16,16 @@ app.use(express.json());
 
 app.use(cors());
 
-const cars : Car[] = [];
+var cars : Car[] = [];
+
+let counter = 0;
+
+function increment(): number {
+  return ++counter;
+}
 
 const car: Car = {
+  id: 0,
   marca: "Toyota Corolla",
   ano: "2020",
   cor: "Preto",
@@ -31,12 +39,29 @@ app.get("/cars", (request: Request, response: Response) => {
   return response.json(cars);
 });
 
+app.delete("/cars/:id", (request: Request, response: Response) => {
+  const { id } = request.params;
+
+  const carIndex = cars.findIndex(car => car.id === Number(id));
+  
+  console.log(carIndex);
+
+  cars.splice(carIndex, 1);
+
+  return response.status(200).send();
+});
+
 app.post("/cars", (request: Request, response: Response) => {
   const { marca, ano, cor, placa, imagem } = request.body;
 
-  const car: Car = { marca, ano, cor, placa, imagem};
-
-  console.log(car);
+  const car: Car = { 
+    id: increment(),
+    marca, 
+    ano, 
+    cor, 
+    placa, 
+    imagem
+  };  
 
   cars.push(car);
   
