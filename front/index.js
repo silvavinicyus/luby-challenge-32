@@ -10,12 +10,7 @@
     let $carTable = new DOM('[data-js="car-table"]');
     var $nomeEmpresa = new DOM('[data-js="nome-empresa"]');
     var $telefoneEmpresa = new DOM('[data-js="telefone-empresa"]');    
-    var $form = new DOM('form');  
-
-    var $flag = false;
-    
-    var $body = new DOM('body');
-    
+    var $form = new DOM('form');      
 
     $form.on('submit', handleCreateCar);
       
@@ -58,11 +53,11 @@
       e.preventDefault();
 
       var car = {
-        marca: $marcaInput.get()[0].value,
-        ano: $anoInput.get()[0].value,
-        placa: $placaInput.get()[0].value,
-        cor: $corInput.get()[0].value,
-        imagem: $imagemInput.get()[0].value
+        brandModel: $marcaInput.get()[0].value,
+        year: $anoInput.get()[0].value,
+        plate: $placaInput.get()[0].value,
+        color: $corInput.get()[0].value,
+        image: $imagemInput.get()[0].value
       };          
 
       cleanCarFields();      
@@ -83,7 +78,7 @@
       var ajax = new XMLHttpRequest();
       var cars;            
 
-      ajax.open('GET', 'http://localhost:3333/cars');
+      ajax.open('GET', 'http://localhost:3333/car');
       ajax.send();
 
       ajax.addEventListener('readystatechange', () => {
@@ -103,7 +98,7 @@
 
     function removeCar(car) {                     
       var ajax = new XMLHttpRequest();
-      ajax.open('DELETE', `http://localhost:3333/cars/${car.id}`);
+      ajax.open('DELETE', `http://localhost:3333/car/${car.id}`);
       ajax.send();
 
       ajax.addEventListener('readystatechange', () => {
@@ -116,7 +111,7 @@
 
     function createCar(car) {
       var ajax = new XMLHttpRequest();
-      ajax.open('POST', 'http://localhost:3333/cars');
+      ajax.open('POST', 'http://localhost:3333/car');
       ajax.setRequestHeader("Content-Type", "application/json;charset=UTF-8", false);      
 
       ajax.send(JSON.stringify(car));            
@@ -142,13 +137,13 @@
       var $tdImg = doc.createElement('td');
       var $deleteImg = doc.createElement('td');              
                                 
-      $tdMarca.appendChild(doc.createTextNode(car['marca']));      
-      $tdAno.appendChild(doc.createTextNode(car['ano']));      
-      $tdPlaca.appendChild(doc.createTextNode(car['placa']));      
-      $tdCor.appendChild(doc.createTextNode(car['cor']));
+      $tdMarca.appendChild(doc.createTextNode(car['brandModel']));      
+      $tdAno.appendChild(doc.createTextNode(car['year']));      
+      $tdPlaca.appendChild(doc.createTextNode(car['plate']));      
+      $tdCor.appendChild(doc.createTextNode(car['color']));
 
       var $img = doc.createElement('img');
-      $img.src = car['imagem']; 
+      $img.src = car['image']; 
       $tdImg.appendChild($img);
       
       var $dumpImg = doc.createElement('img');

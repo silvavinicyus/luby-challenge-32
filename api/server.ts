@@ -3,11 +3,11 @@ import cors from 'cors';
 
 interface Car {
   id: number;
-  marca: string;
-  ano: string;
-  cor: string;
-  placa: string;
-  imagem: string;
+  brandModel: string;
+  year: string;
+  color: string;
+  plate: string;
+  image: string;
 }
 
 const app = express();
@@ -26,20 +26,20 @@ function increment(): number {
 
 const car: Car = {
   id: 0,
-  marca: "Toyota Corolla",
-  ano: "2020",
-  cor: "Preto",
-  placa: "ABC-8U76",
-  imagem: "https://s2.glbimg.com/ZThVwCkB3BxGUU8hhHXYd2wuPS4=/0x0:920x628/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_cf9d035bf26b4646b105bd958f32089d/internal_photos/bs/2020/a/i/5DgrA2SvydShlJYTAW1g/2019-09-03-corolla1.jpg"
+  brandModel: "Toyota Corolla",
+  year: "2020",
+  color: "Preto",
+  plate: "ABC-8U76",
+  image: "https://s2.glbimg.com/ZThVwCkB3BxGUU8hhHXYd2wuPS4=/0x0:920x628/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_cf9d035bf26b4646b105bd958f32089d/internal_photos/bs/2020/a/i/5DgrA2SvydShlJYTAW1g/2019-09-03-corolla1.jpg"
 }
 
 cars.push(car);
 
-app.get("/cars", (request: Request, response: Response) => {
+app.get("/car", (request: Request, response: Response) => {
   return response.json(cars);
 });
 
-app.delete("/cars/:id", (request: Request, response: Response) => {
+app.delete("/car/:id", (request: Request, response: Response) => {
   const { id } = request.params;
 
   const carIndex = cars.findIndex(car => car.id === Number(id));
@@ -51,16 +51,16 @@ app.delete("/cars/:id", (request: Request, response: Response) => {
   return response.status(200).send();
 });
 
-app.post("/cars", (request: Request, response: Response) => {
-  const { marca, ano, cor, placa, imagem } = request.body;
+app.post("/car", (request: Request, response: Response) => {
+  const { brandModel, year, color, plate, image } = request.body;
 
   const car: Car = { 
     id: increment(),
-    marca, 
-    ano, 
-    cor, 
-    placa, 
-    imagem
+    brandModel, 
+    year, 
+    color, 
+    plate, 
+    image
   };  
 
   cars.push(car);
